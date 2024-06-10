@@ -1,0 +1,63 @@
+﻿@model MtpTeste.Models.ListaDeTarefasViewModel
+
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Teste Técnico Mtp</title>
+	<link rel="stylesheet" href="~/css/styles.css" />
+</head>
+
+<p><label class="text-danger">@TempData["message"]</label></p>
+
+@using (Html.BeginForm("EditarTarefa", "ListaDeTarefas", null, FormMethod.Post))
+{
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+	@Html.HiddenFor(model => model.TarefaId)
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-6">
+				<table class="table table-bordered table-hover">
+					<thead class="thead-dark">
+						<tr>
+							<th colspan="2" class="text-center">Edição de Tarefa</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>@Html.LabelFor(model => model.Titulo)</td>
+							<td>
+								@Html.EditorFor(model => model.Titulo, new { htmlAttribute = new { @class = "form-control" } })
+								@Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
+							</td>
+						</tr>
+						<tr>
+							<td>@Html.LabelFor(model => model.Descricao)</td>
+							<td>
+								@Html.EditorFor(model => model.Descricao, new { htmlAttribute = new { @class = "form-control" } })
+								@Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+							</td>
+						</tr>
+						<tr>
+							<td>@Html.LabelFor(model => model.Concluido)</td>
+							<td>@Html.EditorFor(model => model.Concluido, new { htmlAttribute = new { @class = "form-control" } })</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="row mt-3">
+					<div class="col-lg-12 text-center">
+						<div class="btn-group" role="group">
+							<button type="button" class="btn btn-default" id="voltarButton">Voltar</button>
+							<input type="submit" value="Salvar" id="salvarButton" class="btn btn-success" autocomplete="off" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+<script>
+	document.getElementById('voltarButton').addEventListener('click', function () {
+		window.location.href = '../../ListaDeTarefas/Index';
+	});
+</script>

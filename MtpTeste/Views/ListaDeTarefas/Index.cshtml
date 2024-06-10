@@ -1,0 +1,60 @@
+﻿@model MtpTeste.Models.ListaDeTarefasViewModel
+
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Teste Técnico Mtp</title>
+	<link rel="stylesheet" href="~/css/styles.css" />
+</head>
+
+<p><label class="error-message">@TempData["message"]</label></p>
+
+@if (Model != null)
+{
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="row mt-3 justify-content-center">
+				<div class="col-lg-4 text-center">
+					<button type="button" class="btn btn-light" id="addTaskButton">
+						Adicionar Tarefa
+					</button>
+				</div>
+			</div>
+
+			<div class="col-lg-8">
+				<table class="table table-bordered table-hover">
+					<thead class="thead-dark">
+						<tr>
+							<th colspan="4" class="text-center tabela-titulo"><strong>Lista de Tarefas</strong></th>
+						</tr>
+						<tr>
+							<th>Concluído</th>
+							<th>Título</th>
+							<th>Descrição</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model.ListaDeTarefasVM)
+						{
+							<tr>
+								<td class="text-center">@Html.DisplayFor(modelItem => item.Concluido)</td>
+								<td>@Html.DisplayFor(modelItem => item.Titulo)</td>
+								<td>@Html.DisplayFor(modelItem => item.Descricao)</td>
+								<td>
+									@Html.ActionLink("Editar Tarefa", "EditarTarefa", new { tarefaId = item.TarefaId }) /
+									@Html.ActionLink("Excluir", "ExcluirTarefa", new { tarefaId = item.TarefaId }, new { @class = "btn btn-danger btn-excluir", onclick = "return confirm('Deseja realmente excluir a tarefa?')" })
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+}
+<script>
+	document.getElementById('addTaskButton').addEventListener('click', function () {
+		window.location.href = '../../ListaDeTarefas/EditarTarefa/';
+	});
+</script>
+
